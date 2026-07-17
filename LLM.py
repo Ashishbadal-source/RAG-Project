@@ -72,7 +72,7 @@ class LLMGenerator:
             gc.collect()
             logging.info("Resources have been released.")
     
-    async def process_prompt(self, client, prompt, max_retries=3):
+    async def process_prompt(self, client, prompt, max_retries= 3):
         for attempt in range(max_retries):
             try:
                 response = await client.chat.completions.create(
