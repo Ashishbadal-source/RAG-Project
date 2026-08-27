@@ -1,0 +1,10 @@
+2026-07-19 13:59:41,909 - INFO - Starting pipeline for experiment e3cc2089-cce9-484b-8bc9-df0fc6a65b2f
+2026-07-19 13:59:41,924 - INFO - Importing MIRAGE modules...
+2026-07-19 13:59:41,957 - ERROR - Pipeline Error: No module named 'jsonlines'
+Traceback (most recent call last):
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\backend\pipeline_runner.py", line 150, in _run_pipeline_sync
+    from utils import load_yaml
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\utils.py", line 12, in <module>
+    import json, yaml, os, jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+
