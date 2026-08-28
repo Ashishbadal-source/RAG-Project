@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { dashboardAPI, experimentsAPI } from '../api/endpoints';
 import Button from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { PlayCircle } from 'lucide-react';
+import { PlayCircle, Check, Settings2, Database, Cpu, Layers } from 'lucide-react';
 
 export default function RunExperiment() {
   const navigate = useNavigate();
@@ -63,13 +63,18 @@ export default function RunExperiment() {
   };
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Run Experiment</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Run Experiment</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="card p-6 space-y-6 bg-card">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Section 1: Details */}
+        <div className="card p-6 space-y-6">
+          <div className="flex items-center space-x-2 border-b border-border pb-4 mb-6">
+            <Settings2 className="w-5 h-5 text-accent" />
+            <h2 className="text-lg font-semibold text-black">Experiment Details</h2>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -95,80 +100,132 @@ export default function RunExperiment() {
               </select>
             </div>
           </div>
+        </div>
 
-          {/* Model Selection */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-border">
-            {/* LLMs */}
-            {(formData.mode === 'RAG' || formData.mode === 'LLM') && (
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                   <label className="label text-base">Select LLMs</label>
-                   <span className="text-xs text-muted">(Default: OpenAI for CPU)</span>
-                </div>
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
-                  {configData?.available_llms.map(llm => (
-                    <label key={llm} className="flex items-center space-x-3 p-3 rounded-lg border border-border hover:bg-cardHover cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        className="h-4 w-4 text-accent border-border rounded focus:ring-accent"
-                        checked={formData.llms.includes(llm)}
-                        onChange={() => handleLlmToggle(llm)}
-                      />
-                      <span className="text-sm font-medium text-gray-300">{llm}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* Section 2: Models */}
+        {(formData.mode === 'RAG' || formData.mode === 'LLM' || formData.mode === 'RET') && (
+          <div className="card p-6 space-y-6">
+            <div className="flex items-center space-x-2 border-b border-border pb-4 mb-6">
+              <Database className="w-5 h-5 text-accent" />
+              <h2 className="text-lg font-semibold text-black">Model Selection</h2>
+            </div>
 
-            {/* Retrievers */}
-            {(formData.mode === 'RAG' || formData.mode === 'RET') && (
-              <div className="space-y-3">
-                <label className="label text-base">Select Retrievers</label>
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
-                  {configData?.available_retrievers.map(ret => (
-                    <label key={ret} className="flex items-center space-x-3 p-3 rounded-lg border border-border hover:bg-cardHover cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        className="h-4 w-4 text-accent border-border rounded focus:ring-accent"
-                        checked={formData.retrievers.includes(ret)}
-                        onChange={() => handleRetrieverToggle(ret)}
-                      />
-                      <span className="text-sm font-medium text-gray-300">{ret}</span>
-                    </label>
-                  ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* LLMs */}
+              {(formData.mode === 'RAG' || formData.mode === 'LLM') && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                     <label className="text-sm font-medium text-black">Language Models</label>
+                     <span className="text-xs text-slate-900 bg-card-elevated px-2 py-1 rounded">Select one or more</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 max-h-64 overflow-y-auto pr-2">
+                    {configData?.available_llms.map(llm => {
+                      const isSelected = formData.llms.includes(llm);
+                      return (
+                        <div 
+                          key={llm} 
+                          onClick={() => handleLlmToggle(llm)}
+                          className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                            isSelected 
+                              ? 'border-accent bg-accent/5 shadow-[0_0_15px_rgba(6,182,212,0.1)]' 
+                              : 'border-border bg-card-elevated hover:border-slate-500'
+                          }`}
+                        >
+                          <div className="flex flex-col">
+                            <span className={`font-medium text-sm ${isSelected ? 'text-accent' : 'text-black'}`}>{llm}</span>
+                          </div>
+                          <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${isSelected ? 'border-accent bg-accent text-background' : 'border-slate-600 bg-transparent'}`}>
+                             {isSelected && <Check className="w-3 h-3" />}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+
+              {/* Retrievers */}
+              {(formData.mode === 'RAG' || formData.mode === 'RET') && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                     <label className="text-sm font-medium text-black">Retrieval Models</label>
+                     <span className="text-xs text-slate-900 bg-card-elevated px-2 py-1 rounded">Select one or more</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 max-h-64 overflow-y-auto pr-2">
+                    {configData?.available_retrievers.map(ret => {
+                      const isSelected = formData.retrievers.includes(ret);
+                      return (
+                        <div 
+                          key={ret} 
+                          onClick={() => handleRetrieverToggle(ret)}
+                          className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                            isSelected 
+                              ? 'border-accent bg-accent/5 shadow-[0_0_15px_rgba(6,182,212,0.1)]' 
+                              : 'border-border bg-card-elevated hover:border-slate-500'
+                          }`}
+                        >
+                          <div className="flex flex-col">
+                            <span className={`font-medium text-sm ${isSelected ? 'text-accent' : 'text-black'}`}>{ret}</span>
+                          </div>
+                          <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${isSelected ? 'border-accent bg-accent text-background' : 'border-slate-600 bg-transparent'}`}>
+                             {isSelected && <Check className="w-3 h-3" />}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+          {/* Section 3: Parameters & Execution */}
+        <div className="card p-6 space-y-6">
+          <div className="flex items-center space-x-2 border-b border-border pb-4 mb-6">
+            <Layers className="w-5 h-5 text-accent" />
+            <h2 className="text-lg font-semibold text-black">Parameters & Execution</h2>
           </div>
 
-          {/* Hyperparameters */}
-          <div className="pt-4 border-t border-border space-y-4">
-            <h3 className="label text-base">Parameters</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="space-y-1">
-                <label className="text-xs text-muted">Temperature</label>
-                <input type="number" step="0.1" min="0" max="2" className="input text-sm h-8" value={formData.temperature} onChange={e=>setFormData({...formData, temperature: parseFloat(e.target.value)})} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs text-muted">Top P</label>
-                <input type="number" step="0.1" min="0" max="1" className="input text-sm h-8" value={formData.top_p} onChange={e=>setFormData({...formData, top_p: parseFloat(e.target.value)})} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs text-muted">Max Tokens</label>
-                <input type="number" min="1" max="4096" className="input text-sm h-8" value={formData.max_tokens} onChange={e=>setFormData({...formData, max_tokens: parseInt(e.target.value)})} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs text-muted">Top K (Retrieval)</label>
-                <input type="number" min="1" max="20" className="input text-sm h-8" value={formData.top_k} onChange={e=>setFormData({...formData, top_k: parseInt(e.target.value)})} />
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-slate-900">Temperature</label>
+              <input type="number" step="0.1" min="0" max="2" className="input" value={formData.temperature} onChange={e=>setFormData({...formData, temperature: parseFloat(e.target.value)})} />
             </div>
-            <div className="flex items-center space-x-2 pt-2">
-                <input type="checkbox" id="use_cuda" className="rounded" checked={formData.use_cuda} onChange={e=>setFormData({...formData, use_cuda: e.target.checked})} />
-                <label htmlFor="use_cuda" className="text-sm text-gray-300">Use CUDA for Retrieval (Uncheck for CPU mode)</label>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-slate-900">Top P</label>
+              <input type="number" step="0.1" min="0" max="1" className="input" value={formData.top_p} onChange={e=>setFormData({...formData, top_p: parseFloat(e.target.value)})} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-slate-900">Max Tokens</label>
+              <input type="number" min="1" max="4096" className="input" value={formData.max_tokens} onChange={e=>setFormData({...formData, max_tokens: parseInt(e.target.value)})} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-slate-900">Top K (Retrieval)</label>
+              <input type="number" min="1" max="20" className="input" value={formData.top_k} onChange={e=>setFormData({...formData, top_k: parseInt(e.target.value)})} />
             </div>
           </div>
 
+          <div className="flex items-center justify-between p-4 bg-card-elevated rounded-xl border border-border mt-6">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-card-elevated rounded-lg"><Cpu className="w-5 h-5 text-accent" /></div>
+              <div className="flex flex-col">
+                <span className="font-medium text-black text-sm">Hardware Acceleration</span>
+                <span className="text-xs text-slate-900">Use CUDA for Retrieval (Disable for CPU mode)</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFormData({...formData, use_cuda: !formData.use_cuda})}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-background ${
+                formData.use_cuda ? 'bg-accent' : 'bg-[#1e293b]'
+              }`}
+            >
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.use_cuda ? 'translate-x-6' : 'translate-x-1'
+              }`} />
+            </button>
+          </div>
         </div>
 
         <div className="flex justify-end">

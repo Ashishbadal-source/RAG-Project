@@ -1,0 +1,10 @@
+2026-08-28 18:10:32,941 - INFO - Starting pipeline for experiment 3f2c3a28-4441-4f4d-ac71-1652e5fb8ed4
+2026-08-28 18:10:32,946 - INFO - Importing MIRAGE modules...
+2026-08-28 18:10:32,961 - ERROR - Pipeline Error: No module named 'openai'
+Traceback (most recent call last):
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\backend\pipeline_runner.py", line 151, in _run_pipeline_sync
+    from LLM import LLMGenerator
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\LLM.py", line 19, in <module>
+    from openai import AsyncOpenAI
+ModuleNotFoundError: No module named 'openai'
+

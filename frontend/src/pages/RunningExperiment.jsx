@@ -80,10 +80,10 @@ export default function RunningExperiment() {
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-100">{exp?.name || 'Experiment'}</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-black">{exp?.name || 'Experiment'}</h1>
           <div className="flex items-center space-x-3 mt-2">
             <StatusBadge status={exp?.status || 'queued'} />
-            <span className="text-sm text-muted">ID: {id}</span>
+            <span className="text-sm text-slate-900">ID: {id}</span>
           </div>
         </div>
         
@@ -113,41 +113,41 @@ export default function RunningExperiment() {
 
       <div className="card p-6">
         <div className="flex justify-between mb-2">
-          <span className="text-sm font-medium text-gray-300">Stage: <span className="text-accent">{stage}</span></span>
-          <span className="text-sm font-medium text-gray-300">{percent}%</span>
+          <span className="text-sm font-medium text-slate-900">Stage: <span className="text-accent">{stage}</span></span>
+          <span className="text-sm font-medium text-slate-900">{percent}%</span>
         </div>
-        <div className="w-full bg-border/50 rounded-full h-2.5 mb-6">
-          <div className="bg-accent h-2.5 rounded-full transition-all duration-300" style={{ width: `${percent}%` }}></div>
+        <div className="w-full bg-[#1e293b] rounded-full h-2.5 mb-6">
+          <div className="bg-gradient-to-r from-accent to-accent-teal h-2.5 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.5)]" style={{ width: `${percent}%` }}></div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div className="bg-cardHover p-3 rounded border border-border">
-            <span className="block text-muted text-xs mb-1">Current LLM</span>
-            <span className="font-medium text-gray-100 truncate" title={llm}>{llm || '-'}</span>
+          <div className="bg-card-elevated p-3 rounded border border-border">
+            <span className="block text-slate-900 text-xs mb-1">Current LLM</span>
+            <span className="font-medium text-black truncate" title={llm}>{llm || '-'}</span>
           </div>
-          <div className="bg-cardHover p-3 rounded border border-border">
-            <span className="block text-muted text-xs mb-1">Current Retriever</span>
-            <span className="font-medium text-gray-100 truncate" title={retriever}>{retriever || '-'}</span>
+          <div className="bg-card-elevated p-3 rounded border border-border">
+            <span className="block text-slate-900 text-xs mb-1">Current Retriever</span>
+            <span className="font-medium text-black truncate" title={retriever}>{retriever || '-'}</span>
           </div>
-          <div className="bg-cardHover p-3 rounded border border-border">
-            <span className="block text-muted text-xs mb-1">Progress</span>
-            <span className="font-medium text-gray-100">{query_index} / {total || '-'}</span>
+          <div className="bg-card-elevated p-3 rounded border border-border">
+            <span className="block text-slate-900 text-xs mb-1">Progress</span>
+            <span className="font-medium text-black">{query_index} / {total || '-'}</span>
           </div>
-          <div className="bg-cardHover p-3 rounded border border-border">
-            <span className="block text-muted text-xs mb-1">Time</span>
-            <span className="font-medium text-gray-100">{elapsed_sec}s elapsed {eta_sec ? `(~${eta_sec}s left)` : ''}</span>
+          <div className="bg-card-elevated p-3 rounded border border-border">
+            <span className="block text-slate-900 text-xs mb-1">Time</span>
+            <span className="font-medium text-black">{elapsed_sec}s elapsed {eta_sec ? `(~${eta_sec}s left)` : ''}</span>
           </div>
         </div>
       </div>
 
       <div className="card overflow-hidden flex flex-col">
-        <div className="bg-gray-900 px-4 py-2 flex items-center text-gray-300 border-b border-gray-800">
-          <Terminal className="h-4 w-4 mr-2" />
+        <div className="bg-[#080D18] px-4 py-2 flex items-center text-slate-500 border-b border-border">
+          <Terminal className="h-4 w-4 mr-2 text-accent" />
           <span className="text-xs font-mono uppercase tracking-wider">Live Logs</span>
         </div>
-        <div className="bg-[#1e1e1e] p-4 h-96 overflow-y-auto font-mono text-sm text-gray-300">
+        <div className="bg-[#0B1120] p-4 h-96 overflow-y-auto font-mono text-sm text-slate-200">
           {logs.length === 0 ? (
-            <span className="text-gray-500">Waiting for logs...</span>
+            <span className="text-slate-500">Waiting for logs...</span>
           ) : (
             logs.map((log, idx) => (
               <div key={idx} className="whitespace-pre-wrap mb-1">{log}</div>

@@ -2,6 +2,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
+import os
+
+# Force HuggingFace to use a local cache directory instead of the globally configured G: drive
+_hf_cache = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".hf_cache")
+os.environ["HF_HOME"] = _hf_cache
+os.environ["HUGGINGFACE_HUB_CACHE"] = _hf_cache
+os.environ["TRANSFORMERS_CACHE"] = _hf_cache
+os.environ["SENTENCE_TRANSFORMERS_HOME"] = _hf_cache
 
 from backend.config import get_settings
 from backend.database import init_db

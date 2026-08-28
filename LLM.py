@@ -12,11 +12,8 @@ Usage:
 import torch.distributed
 import os, torch, logging, ast
 from utils import load_json, save_json, save_jsonl, check_file, convert_doc_pool, convert_oracle
-from vllm import LLM, SamplingParams
 import contextlib
 import gc
-from vllm.distributed import (destroy_distributed_environment,
-                              destroy_model_parallel)
 from tqdm import tqdm
 from typing import Dict, List, Tuple, Any, Union
 from openai import AsyncOpenAI
@@ -25,8 +22,27 @@ import numpy as np
 from tqdm.asyncio import tqdm as async_tqdm
 from datasets import load_dataset
 
+# vllm is optional — only available on Linux/GPU environments
+try:
+    from vllm import LLM as VLLM_LLM, SamplingParams
+    from vllm.distributed import (destroy_distributed_environment,
+                                  destroy_model_parallel)
+    VLLM_AVAILABLE = True
+except ImportError:
+    VLLM_LLM = None
+    SamplingParams = None
+    destroy_distributed_environment = lambda: None
+    destroy_model_parallel = lambda: None
+    VLLM_AVAILABLE = False
+    logging.getLogger(__name__).debug(
+        "vllm not installed — local HuggingFace LLM inference disabled. "
+        "Only OpenAI API models will work."
+    )
+
 logging.basicConfig(level=logging.INFO)
-hf_dataset = load_dataset("nlpai-lab/mirage")['train']
+
+# HuggingFace cache directory — keep on E: drive to avoid missing drive issues
+HF_CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".hf_cache")
 
 class LLMGenerator:
     def __init__(self, LLM_info: Dict[str, Any]) -> None:
@@ -36,8 +52,10 @@ class LLMGenerator:
         self.save_directory = LLM_info['save_directory']
 
         try:
+            if not VLLM_AVAILABLE:
+                raise ImportError("vllm is not installed — using OpenAI API mode.")
             self.LLM_id = self.LLM_repo.split('/')[1]
-            self.model = LLM(model=self.LLM_repo,
+            self.model = VLLM_LLM(model=self.LLM_repo,
                              tensor_parallel_size=self.vllm_configs['tensor_parallel_size'],
                              gpu_memory_utilization=self.vllm_configs['gpu_memory_utilization'])
         except Exception as e:
@@ -52,6 +70,8 @@ class LLMGenerator:
             else:
                 self.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
 
+        logging.info("Loading MIRAGE HuggingFace dataset (this may take a moment on first run)...")
+        hf_dataset = load_dataset("nlpai-lab/mirage", cache_dir=HF_CACHE_DIR)['train']
         self.doc_pool = convert_doc_pool(hf_dataset)
         self.dataset = hf_dataset.to_list()
         self.oracle = convert_oracle(hf_dataset)
@@ -184,6 +204,8 @@ class LLMGenerator:
                 for idx, result in responses.items():
                     dataset[idx]['model_predictions'] = [result]
             else:
+                if not VLLM_AVAILABLE or SamplingParams is None:
+                    raise RuntimeError("vllm SamplingParams not available but a local model is loaded — this should not happen.")
                 sampling_params = SamplingParams(**self.vllm_configs['sampling_params'])
                 logging.info(sampling_params)
                 responses = self.model.chat(prompts, sampling_params=sampling_params)

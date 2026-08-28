@@ -1,11 +1,11 @@
 export default function StatusBadge({ status }) {
   const styles = {
-    queued: 'bg-gray-800 text-gray-300 border-gray-700',
-    running: 'bg-blue-900/30 text-blue-400 border-blue-500/30 animate-pulse',
-    paused: 'bg-yellow-900/30 text-yellow-400 border-yellow-500/30',
-    completed: 'bg-green-900/30 text-green-400 border-green-500/30',
-    failed: 'bg-red-900/30 text-red-400 border-red-500/30',
-    cancelled: 'bg-gray-800 text-gray-400 border-gray-700',
+    queued: 'bg-[#FEF3C7] text-[#92400E] border-[#FCD34D]',
+    running: 'bg-[#E0F2FE] text-[#0369A1] border-[#7DD3FC]',
+    paused: 'bg-[#FEF3C7] text-[#92400E] border-[#FCD34D]',
+    completed: 'bg-[#DCFCE7] text-[#047857] border-[#86EFAC]',
+    failed: 'bg-[#FEE2E2] text-[#B91C1C] border-[#FCA5A5]',
+    cancelled: 'bg-card-elevated text-slate-500 border-border',
   };
 
   const style = styles[status] || styles.queued;

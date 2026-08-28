@@ -1,0 +1,130 @@
+2026-08-28 18:15:58,211 - INFO - Starting pipeline for experiment a55a4738-6b92-4aad-a7bf-a9d5792ca4d2
+2026-08-28 18:15:58,219 - INFO - Importing MIRAGE modules...
+2026-08-28 18:15:58,281 - WARNING - vllm not installed — local HuggingFace LLM inference disabled. Only OpenAI API models will work.
+2026-08-28 18:17:31,768 - INFO - Use pytorch device_name: cpu
+2026-08-28 18:17:31,769 - INFO - Load pretrained SentenceTransformer: BAAI/bge-small-en-v1.5
+2026-08-28 18:17:32,141 - INFO - WS disconnected for experiment a55a4738-6b92-4aad-a7bf-a9d5792ca4d2
+2026-08-28 18:17:32,172 - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-small-en-v1.5/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-08-28 18:17:32,235 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-small-en-v1.5/5c38ec7c405ec4b44b94cc5a9bb96e735b38267a/modules.json "HTTP/1.1 200 OK"
+2026-08-28 18:17:32,238 - WARNING - No sentence-transformers model found with name BAAI/bge-small-en-v1.5. Creating a new one with mean pooling.
+2026-08-28 18:17:32,458 - INFO - WS connected for experiment a55a4738-6b92-4aad-a7bf-a9d5792ca4d2. Total connections: 1
+2026-08-28 18:17:32,497 - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-small-en-v1.5/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-08-28 18:17:32,501 - ERROR - Could not cache non-existence of file. Will ignore error and continue. Error: [WinError 3] The system cannot find the path specified: 'G:\\'
+2026-08-28 18:17:32,970 - ERROR - Pipeline Error: [WinError 3] The system cannot find the path specified: 'G:\\'
+Traceback (most recent call last):
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_http.py", line 720, in hf_raise_for_status
+    response.raise_for_status()
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/BAAI/bge-small-en-v1.5/resolve/main/adapter_config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1649, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1572, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_http.py", line 651, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_http.py", line 734, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a91838e-0a1d705075f2a39e22b212d1;dc6d0858-15ed-4a00-b903-5bd4dd44e3a5)
+
+Entry Not Found for url: https://huggingface.co/BAAI/bge-small-en-v1.5/resolve/main/adapter_config.json.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\My Drive\\AI_MODELS\\hub\\models--BAAI--bge-small-en-v1.5\\refs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\My Drive\\AI_MODELS\\hub\\models--BAAI--bge-small-en-v1.5'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\My Drive\\AI_MODELS\\hub'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\My Drive\\AI_MODELS'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\My Drive'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\backend\pipeline_runner.py", line 174, in _run_pipeline_sync
+    sys.path.insert(0, mirage_dir)
+                     ^^^^^^^^^^^^^^
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\retriever.py", line 36, in __init__
+    self.model = SentenceTransformer(self.retriever_repo, trust_remote_code=True).to(self.device)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\sentence_transformers\SentenceTransformer.py", line 339, in __init__
+    modules = self._load_auto_model(
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\sentence_transformers\SentenceTransformer.py", line 2112, in _load_auto_model
+    transformer_model = Transformer(
+                        ^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\sentence_transformers\models\Transformer.py", line 88, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\sentence_transformers\models\Transformer.py", line 139, in _load_config
+    find_adapter_config_file(
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\transformers\utils\peft_utils.py", line 83, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+                              ^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 276, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 507, in cached_files
+    raise e
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 419, in cached_files
+    hf_hub_download(
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 982, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1057, in _hf_hub_download_to_cache_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1670, in _get_metadata_or_catch_error
+    _cache_commit_hash_for_specific_revision(storage_folder, revision, commit_hash)
+  File "C:\Users\dell\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 683, in _cache_commit_hash_for_specific_revision
+    ref_path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1120, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1120, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1120, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  [Previous line repeated 2 more times]
+  File "C:\Program Files\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'G:\\'
+

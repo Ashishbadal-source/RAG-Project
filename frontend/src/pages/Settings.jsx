@@ -42,17 +42,17 @@ export default function Settings() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight text-gray-100">Settings</h1>
+      <h1 className="text-2xl font-bold tracking-tight text-black">Settings</h1>
 
       <form onSubmit={handleSave} className="space-y-6">
         
         {/* API Keys */}
         <div className="card p-6">
           <div className="flex items-center space-x-2 mb-4">
-            <Key className="h-5 w-5 text-gray-500" />
-            <h2 className="text-lg font-medium text-gray-100">API Keys</h2>
+            <Key className="h-5 w-5 text-slate-500" />
+            <h2 className="text-lg font-medium text-black">API Keys</h2>
           </div>
-          <p className="text-sm text-muted mb-6">
+          <p className="text-sm text-slate-900 mb-6">
             Configure keys required for LLM generation. Keys are stored in the backend `.env` file.
           </p>
           
@@ -72,12 +72,12 @@ export default function Settings() {
 
         {/* System Settings (Read Only for now) */}
         <div className="card p-6">
-          <h2 className="text-lg font-medium text-gray-100 mb-4">Core Configuration</h2>
-          <p className="text-sm text-muted mb-4">
+          <h2 className="text-lg font-medium text-black mb-4">Core Configuration</h2>
+          <p className="text-sm text-slate-900 mb-4">
             These settings are read from `config.yaml` and currently managed by the experiment runner.
           </p>
           
-          <div className="bg-cardHover p-4 rounded font-mono text-xs text-gray-400 overflow-x-auto border border-border">
+          <div className="bg-card-elevated p-4 rounded font-mono text-xs text-slate-500 overflow-x-auto border border-border">
             <pre>{JSON.stringify(data?.config, null, 2)}</pre>
           </div>
         </div>
