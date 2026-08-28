@@ -3,3 +3,7 @@ Inference_result/*
 Retrieval_result/*
 
 __pycache__/
+.hf_cache/
+
+.env
+.venv/

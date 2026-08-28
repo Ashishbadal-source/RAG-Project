@@ -54,8 +54,8 @@ export default function ExperimentResult() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-100">{exp.name} - Results</h1>
-          <p className="text-sm text-muted mt-1">Completed on {new Date(exp.completed_at).toLocaleString()}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-black">{exp.name} - Results</h1>
+          <p className="text-sm text-slate-900 mt-1">Completed on {new Date(exp.completed_at).toLocaleString()}</p>
         </div>
         <Button onClick={handleDownload} variant="secondary">
           <Download className="h-4 w-4 mr-2" /> Download Archive
@@ -64,7 +64,7 @@ export default function ExperimentResult() {
 
       {/* Aggregate Metrics */}
       <div>
-        <h2 className="text-lg font-medium text-gray-100 mb-4">Aggregate Performance</h2>
+        <h2 className="text-lg font-medium text-black mb-4">Aggregate Performance</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <MetricCard title="Avg EM Loose" value={metrics_summary.avg_em_loose?.toFixed(3) || '-'} highlight />
           <MetricCard title="Avg F1 Score" value={metrics_summary.avg_f1?.toFixed(3) || '-'} highlight />
@@ -78,7 +78,7 @@ export default function ExperimentResult() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chart */}
         <div className="lg:col-span-1 card p-6">
-          <h2 className="text-lg font-medium text-gray-100 mb-4">Context Metrics</h2>
+          <h2 className="text-lg font-medium text-black mb-4">Context Metrics</h2>
           <div className="h-64">
             <MetricBarChart data={chart_data.context_metrics || []} />
           </div>
@@ -86,11 +86,11 @@ export default function ExperimentResult() {
 
         {/* Breakdown Table */}
         <div className="lg:col-span-2 card p-6">
-          <h2 className="text-lg font-medium text-gray-100 mb-4">Pair Breakdown</h2>
+          <h2 className="text-lg font-medium text-black mb-4">Pair Breakdown</h2>
           {per_pair.length > 0 ? (
              <DataTable columns={pairColumns} data={per_pair} />
           ) : (
-             <p className="text-sm text-muted">No pair data available.</p>
+             <p className="text-sm text-slate-900">No pair data available.</p>
           )}
         </div>
       </div>

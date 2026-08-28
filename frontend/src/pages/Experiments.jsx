@@ -57,13 +57,13 @@ export default function Experiments() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Experiments</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Experiments</h1>
         <Button onClick={() => navigate('/run')}>Run New Experiment</Button>
       </div>
 
       <div className="card overflow-hidden">
-        <div className="p-4 border-b border-border bg-gray-50 flex items-center space-x-4">
-          <label className="text-sm font-medium text-gray-300">Filter by Status:</label>
+        <div className="p-4 border-b border-border bg-card-elevated flex items-center space-x-4">
+          <label className="text-sm font-medium text-slate-900">Filter by Status:</label>
           <select 
             className="input max-w-xs h-9 py-1"
             value={statusFilter}
@@ -89,7 +89,7 @@ export default function Experiments() {
             
             {/* Pagination Controls */}
             <div className="p-4 border-t border-border flex items-center justify-between bg-card">
-              <span className="text-sm text-muted">
+              <span className="text-sm text-slate-900">
                 Showing {((page - 1) * 15) + 1} to {Math.min(page * 15, data.total)} of {data.total}
               </span>
               <div className="flex items-center space-x-2">

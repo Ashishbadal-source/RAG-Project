@@ -54,7 +54,7 @@ export default function LLMAnalysis() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">LLM Analysis</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">LLM Analysis</h1>
         <select 
           className="input max-w-xs"
           value={selectedLlm}
@@ -69,40 +69,40 @@ export default function LLMAnalysis() {
       {analysisLoading ? <SkeletonLoader count={4} /> : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="card p-6 border-l-4 border-l-gray-400">
-               <h3 className="text-sm font-bold text-gray-100 mb-4 uppercase tracking-wider">Base Mode (No Context)</h3>
+            <div className="card p-6 border-l-4 border-l-muted">
+               <h3 className="text-sm font-bold text-black mb-4 uppercase tracking-wider">Base Mode (No Context)</h3>
                <div className="space-y-3">
-                 <div className="flex justify-between"><span className="text-muted">Avg F1</span><span className="font-medium">{base.f1?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Loose</span><span className="font-medium">{base.em_loose?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Strict</span><span className="font-medium">{base.em_strict?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">Avg F1</span><span className="font-medium text-black">{base.f1?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Loose</span><span className="font-medium text-black">{base.em_loose?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Strict</span><span className="font-medium text-black">{base.em_strict?.toFixed(4) || '-'}</span></div>
                </div>
             </div>
             
             <div className="card p-6 border-l-4 border-l-accent">
-               <h3 className="text-sm font-bold text-gray-100 mb-4 uppercase tracking-wider">RAG Mode (Avg Top-5)</h3>
+               <h3 className="text-sm font-bold text-black mb-4 uppercase tracking-wider">RAG Mode (Avg Top-5)</h3>
                <div className="space-y-3">
-                 <div className="flex justify-between"><span className="text-muted">Avg F1</span><span className="font-medium">{top5.f1?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Loose</span><span className="font-medium">{top5.em_loose?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Strict</span><span className="font-medium">{top5.em_strict?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">Avg F1</span><span className="font-medium text-black">{top5.f1?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Loose</span><span className="font-medium text-black">{top5.em_loose?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Strict</span><span className="font-medium text-black">{top5.em_strict?.toFixed(4) || '-'}</span></div>
                </div>
             </div>
             
-            <div className="card p-6 border-l-4 border-l-green-500">
-               <h3 className="text-sm font-bold text-gray-100 mb-4 uppercase tracking-wider">Oracle Mode (Perfect Context)</h3>
+            <div className="card p-6 border-l-4 border-l-success">
+               <h3 className="text-sm font-bold text-black mb-4 uppercase tracking-wider">Oracle Mode (Perfect Context)</h3>
                <div className="space-y-3">
-                 <div className="flex justify-between"><span className="text-muted">Avg F1</span><span className="font-medium">{oracle.f1?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Loose</span><span className="font-medium">{oracle.em_loose?.toFixed(4) || '-'}</span></div>
-                 <div className="flex justify-between"><span className="text-muted">EM Strict</span><span className="font-medium">{oracle.em_strict?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">Avg F1</span><span className="font-medium text-black">{oracle.f1?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Loose</span><span className="font-medium text-black">{oracle.em_loose?.toFixed(4) || '-'}</span></div>
+                 <div className="flex justify-between"><span className="text-slate-900">EM Strict</span><span className="font-medium text-black">{oracle.em_strict?.toFixed(4) || '-'}</span></div>
                </div>
             </div>
           </div>
 
           <div className="card p-6">
-            <h2 className="text-lg font-medium text-gray-100 mb-4">Performance across Retrievers (Top-5)</h2>
+            <h2 className="text-lg font-medium text-black mb-4">Performance across Retrievers (Top-5)</h2>
             {analysis?.per_retriever?.length > 0 ? (
                <DataTable columns={retrieverColumns} data={analysis.per_retriever} />
             ) : (
-               <p className="text-sm text-muted">No RAG evaluation data available for this LLM.</p>
+               <p className="text-sm text-slate-900">No RAG evaluation data available for this LLM.</p>
             )}
           </div>
         </>

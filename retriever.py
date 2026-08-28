@@ -19,7 +19,9 @@ from typing import List, Dict, Any, Tuple
 import numpy as np
 from datasets import load_dataset
 
-hf_dataset = load_dataset("nlpai-lab/mirage")['train']
+# HuggingFace cache directory — keep on project drive to avoid missing drive issues
+_HF_CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".hf_cache")
+
 
 class Retriever:
     def __init__(self, retriever_info: Dict[str, Any]) -> None:
@@ -30,8 +32,15 @@ class Retriever:
         self.save_directory = retriever_info['save_directory']
 
         self.retriever_id = self.retriever_repo.split('/')[1]
-        self.device = torch.device('cuda' if self.use_cuda else 'cpu')
-        self.model = SentenceTransformer(self.retriever_repo, trust_remote_code=True).to(self.device)
+        
+        # Fallback to CPU if CUDA is requested but not available
+        if self.use_cuda and not torch.cuda.is_available():
+            print("WARNING: CUDA requested but Torch is not compiled with CUDA enabled. Falling back to CPU.")
+            self.device = torch.device('cpu')
+        else:
+            self.device = torch.device('cuda' if self.use_cuda else 'cpu')
+        self.model = SentenceTransformer(self.retriever_repo, trust_remote_code=True, cache_folder=_HF_CACHE_DIR).to(self.device)
+        hf_dataset = load_dataset("nlpai-lab/mirage", cache_dir=_HF_CACHE_DIR)['train']
         self.doc_pool = convert_doc_pool(hf_dataset)
         self.dataset = hf_dataset.to_list()
         self.file_name = f"{self.retriever_id}_top{self.top_k}.json"
@@ -116,6 +125,7 @@ class Retriever_Evaluator:
         self.eval_needed = os.listdir(retrieval_dir)
         self.retrieval_dir = retrieval_dir
         self.RET_result_path = RET_result_path
+        hf_dataset = load_dataset("nlpai-lab/mirage", cache_dir=_HF_CACHE_DIR)['train']
         self.doc_pool = convert_doc_pool(hf_dataset)
         self.cached_gt = self.cache_ground_truth(self.doc_pool)
 

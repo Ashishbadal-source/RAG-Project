@@ -6,11 +6,11 @@ export default function TopBar() {
   const { toggleSidebar, activeExperimentId } = useUIStore();
 
   return (
-    <header className="h-16 bg-card/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 sticky top-0 z-10">
+    <header className="h-16 bg-navbar border-b border-border flex items-center justify-between px-4 sticky top-0 z-10">
       <div className="flex items-center">
         <button 
           onClick={toggleSidebar}
-          className="p-2 rounded-button text-gray-400 hover:bg-cardHover hover:text-gray-100 transition-colors focus:outline-none"
+          className="p-2 rounded-button text-muted hover:bg-card-elevated hover:text-white transition-colors focus:outline-none"
         >
           <Menu className="h-5 w-5" />
         </button>
@@ -20,11 +20,11 @@ export default function TopBar() {
         {activeExperimentId && (
           <Link 
             to={`/experiments/${activeExperimentId}/live`}
-            className="flex items-center space-x-2 px-3 py-1.5 bg-green-900/30 text-green-400 rounded-full text-sm font-medium border border-green-500/30 animate-pulse transition-colors hover:bg-green-900/50"
+            className="flex items-center space-x-2 px-3 py-1.5 bg-accent/10 text-accent rounded-full text-sm font-medium border border-accent/30 transition-colors hover:bg-accent/20"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
             <span>Active Run</span>
           </Link>

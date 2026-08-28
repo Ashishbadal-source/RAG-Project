@@ -1,0 +1,11 @@
+2026-08-28 17:29:02,789 - INFO - Starting pipeline for experiment f85de549-b08c-46e2-b562-ad56daa6d13d
+2026-08-28 17:29:02,815 - INFO - Importing MIRAGE modules...
+2026-08-28 17:29:16,459 - INFO - TensorFlow version 2.21.0 available.
+2026-08-28 17:29:33,080 - ERROR - Pipeline Error: No module named 'vllm'
+Traceback (most recent call last):
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\backend\pipeline_runner.py", line 151, in _run_pipeline_sync
+    from LLM import LLMGenerator
+  File "E:\ALL PROJECTS\MIRAGE\RAG_PROJECT\MIRAGE\LLM.py", line 15, in <module>
+    from vllm import LLM, SamplingParams
+ModuleNotFoundError: No module named 'vllm'
+

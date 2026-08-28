@@ -19,4 +19,4 @@ retriever_info:
   - BAAI/bge-small-en-v1.5
   save_directory: Retrieval_result
   top_k: 5
-  use_cuda: false
+  use_cuda: true

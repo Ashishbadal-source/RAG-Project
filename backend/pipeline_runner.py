@@ -6,6 +6,14 @@ import threading
 from datetime import datetime, timezone
 import yaml
 
+# Force HuggingFace to use a local cache directory instead of the globally configured G: drive
+_hf_cache = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".hf_cache")
+os.environ["HF_HOME"] = _hf_cache
+os.environ["HUGGINGFACE_HUB_CACHE"] = _hf_cache
+os.environ["TRANSFORMERS_CACHE"] = _hf_cache
+os.environ["SENTENCE_TRANSFORMERS_HOME"] = _hf_cache
+
+
 from backend.config import get_settings
 from backend.database import get_db_connection, update_experiment, add_activity, get_next_queued
 from backend.ws_manager import ws_manager
@@ -31,8 +39,34 @@ class JobState:
 job_state = JobState()
 
 
+# Only forward logs from our own modules to the live UI — suppress noisy third-party library output
+_ALLOWED_LOG_PREFIXES = (
+    "root",
+    "__main__",
+    "backend.",
+    "LLM",
+    "retriever",
+    "evaluation",
+    "utils",
+    "pipeline",
+)
+_BLOCKED_LOG_PREFIXES = (
+    "huggingface",
+    "datasets",
+    "transformers",
+    "sentence_transformers",
+    "torch",
+    "urllib3",
+    "httpx",
+    "httpcore",
+    "filelock",
+    "fsspec",
+    "PIL",
+    "tqdm",
+)
+
 class ProgressLogHandler(logging.Handler):
-    """Intercepts logger output and sends it over WebSocket."""
+    """Intercepts logger output and sends it over WebSocket (filtered to our own modules)."""
     def __init__(self, experiment_id: str, loop: asyncio.AbstractEventLoop):
         super().__init__()
         self.experiment_id = experiment_id
@@ -40,10 +74,13 @@ class ProgressLogHandler(logging.Handler):
 
     def emit(self, record):
         try:
+            # Block noisy third-party library logs
+            name = record.name or ""
+            if any(name.startswith(blocked) for blocked in _BLOCKED_LOG_PREFIXES):
+                return
             msg = self.format(record)
-            # Use run_coroutine_threadsafe since logger can be called from sync code
             asyncio.run_coroutine_threadsafe(
-                ws_manager.send_log(self.experiment_id, msg), 
+                ws_manager.send_log(self.experiment_id, msg),
                 self.loop
             )
         except Exception:

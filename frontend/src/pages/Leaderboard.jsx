@@ -16,7 +16,7 @@ export default function Leaderboard() {
 
   const baseColumns = [
     { key: 'rank', label: 'Rank', sortable: false, render: (val) => (
-      <span className={`font-bold ${val === 1 ? 'text-yellow-500' : val === 2 ? 'text-gray-400' : val === 3 ? 'text-amber-600' : 'text-gray-100'}`}>
+      <span className={`font-bold ${val === 1 ? 'text-yellow-500' : val === 2 ? 'text-slate-500' : val === 3 ? 'text-amber-600' : 'text-black'}`}>
         #{val}
       </span>
     )},
@@ -45,12 +45,12 @@ export default function Leaderboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Leaderboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Leaderboard</h1>
       </div>
 
       <div className="card overflow-hidden flex flex-col">
         {/* Tabs */}
-        <div className="flex border-b border-border bg-cardHover">
+        <div className="flex border-b border-border bg-card-elevated">
           {[
             { id: 'pair', label: 'LLM + Retriever Pairs' },
             { id: 'llm', label: 'LLM Only (Base/Oracle)' },
@@ -62,7 +62,7 @@ export default function Leaderboard() {
               className={`px-6 py-4 text-sm font-medium transition-colors ${
                 activeTab === tab.id 
                   ? 'bg-card text-accent border-b-2 border-accent' 
-                  : 'text-gray-500 hover:text-gray-100 hover:bg-cardHover'
+                  : 'text-slate-500 hover:text-black hover:bg-card-elevated'
               }`}
             >
               {tab.label}

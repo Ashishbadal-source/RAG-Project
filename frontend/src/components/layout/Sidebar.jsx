@@ -29,12 +29,15 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <div className={`flex flex-col bg-card border-r border-border transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
-      <div className="h-16 flex items-center justify-center border-b border-border">
+    <div className={`flex flex-col bg-sidebar border-r border-border transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
+      <div className="h-16 flex items-center justify-center border-b border-border px-4">
         {sidebarCollapsed ? (
           <span className="font-bold text-xl text-accent">M</span>
         ) : (
-          <span className="font-bold text-xl text-gray-100 tracking-tight">MIRAGE<span className="text-accent">.</span></span>
+          <span className="font-bold text-xl text-white tracking-widest uppercase flex items-center gap-2">
+            <span className="w-6 h-6 rounded bg-gradient-to-br from-accent to-accent-teal flex items-center justify-center text-xs text-white">M</span>
+            MIRAGE
+          </span>
         )}
       </div>
       <nav className="flex-1 overflow-y-auto py-4">
@@ -48,8 +51,8 @@ export default function Sidebar() {
                   to={item.path}
                   className={`flex items-center rounded-button px-3 py-2.5 transition-all duration-300 ${
                     isActive 
-                      ? 'bg-gradient-to-r from-accent/20 to-transparent text-accent font-medium border-l-2 border-accent' 
-                      : 'text-gray-400 hover:bg-cardHover hover:text-gray-100 border-l-2 border-transparent'
+                      ? 'bg-accent/10 text-accent font-medium border-l-2 border-accent' 
+                      : 'text-slate-300 hover:bg-white/10 hover:text-white border-l-2 border-transparent'
                   }`}
                   title={sidebarCollapsed ? item.name : undefined}
                 >

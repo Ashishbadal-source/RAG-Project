@@ -19,7 +19,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Dashboard</h1>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <SkeletonLoader count={4} />
         </div>
@@ -42,7 +42,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Dashboard</h1>
         <Button onClick={() => navigate('/run')} className="shadow-sm">
           Quick Launch
         </Button>
@@ -61,12 +61,12 @@ export default function Dashboard() {
         <div className="lg:col-span-2 space-y-6">
           {/* Latest Experiment */}
           <div className="card p-6">
-            <h2 className="text-lg font-medium text-gray-100 mb-4">Latest Experiment</h2>
+            <h2 className="text-lg font-medium text-black mb-4">Latest Experiment</h2>
             {latest_experiment ? (
-              <div className="flex items-center justify-between p-4 bg-cardHover rounded-lg border border-border">
+              <div className="flex items-center justify-between p-4 bg-card-elevated rounded-lg border border-border">
                 <div>
-                  <h3 className="font-medium text-gray-100">{latest_experiment.name}</h3>
-                  <p className="text-sm text-muted mt-1">Mode: {latest_experiment.mode}</p>
+                  <h3 className="font-medium text-black">{latest_experiment.name}</h3>
+                  <p className="text-sm text-slate-900 mt-1">Mode: {latest_experiment.mode}</p>
                 </div>
                 <div className="flex items-center space-x-4">
                   <StatusBadge status={latest_experiment.status} />
@@ -76,13 +76,13 @@ export default function Dashboard() {
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-muted">No experiments have been run yet.</p>
+              <p className="text-sm text-slate-900">No experiments have been run yet.</p>
             )}
           </div>
 
           {/* Context Metrics Chart */}
           <div className="card p-6">
-            <h2 className="text-lg font-medium text-gray-100 mb-4">Context Metrics (Latest Run)</h2>
+            <h2 className="text-lg font-medium text-black mb-4">Context Metrics (Latest Run)</h2>
             <div className="h-64">
               <MetricBarChart 
                 data={chart_data?.context_metrics || []} 
@@ -94,41 +94,41 @@ export default function Dashboard() {
         {/* Sidebar Area */}
         <div className="space-y-6">
           <div className="card p-6">
-            <h2 className="text-lg font-medium text-gray-100 mb-4">System Capacity</h2>
+            <h2 className="text-lg font-medium text-black mb-4">System Capacity</h2>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-cardHover rounded border border-border">
-                <div className="flex items-center text-gray-300">
-                  <Database className="h-4 w-4 mr-2 text-muted" />
+              <div className="flex items-center justify-between p-3 bg-card-elevated rounded border border-border">
+                <div className="flex items-center text-slate-900">
+                  <Database className="h-4 w-4 mr-2 text-slate-900" />
                   <span className="text-sm font-medium">Available LLMs</span>
                 </div>
-                <span className="text-sm font-bold text-gray-100">{available_llms.length}</span>
+                <span className="text-sm font-bold text-black">{available_llms.length}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-cardHover rounded border border-border">
-                <div className="flex items-center text-gray-300">
-                  <Layers className="h-4 w-4 mr-2 text-muted" />
+              <div className="flex items-center justify-between p-3 bg-card-elevated rounded border border-border">
+                <div className="flex items-center text-slate-900">
+                  <Layers className="h-4 w-4 mr-2 text-slate-900" />
                   <span className="text-sm font-medium">Available Retrievers</span>
                 </div>
-                <span className="text-sm font-bold text-gray-100">{available_retrievers.length}</span>
+                <span className="text-sm font-bold text-black">{available_retrievers.length}</span>
               </div>
             </div>
           </div>
 
           {/* Activity Feed */}
           <div className="card p-6">
-            <h2 className="text-lg font-medium text-gray-100 mb-4">Recent Activity</h2>
+            <h2 className="text-lg font-medium text-black mb-4">Recent Activity</h2>
             <div className="space-y-4">
               {recent_activity.length > 0 ? (
                 recent_activity.map((act) => (
                   <div key={act.id} className="flex flex-col space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-100">{act.experiment_name || 'Unknown'}</span>
-                      <span className="text-xs text-muted">{new Date(act.timestamp).toLocaleTimeString()}</span>
+                      <span className="text-sm font-medium text-black">{act.experiment_name || 'Unknown'}</span>
+                      <span className="text-xs text-slate-900">{new Date(act.timestamp).toLocaleTimeString()}</span>
                     </div>
-                    <span className="text-sm text-gray-400">{act.message}</span>
+                    <span className="text-sm text-slate-500">{act.message}</span>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted">No recent activity.</p>
+                <p className="text-sm text-slate-900">No recent activity.</p>
               )}
             </div>
           </div>

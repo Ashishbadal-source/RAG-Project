@@ -52,7 +52,7 @@ export default function RetrieverAnalysis() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-100">Retriever Analysis</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">Retriever Analysis</h1>
         <select 
           className="input max-w-xs"
           value={selectedRetriever}
@@ -75,13 +75,13 @@ export default function RetrieverAnalysis() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="card p-6">
-              <h2 className="text-lg font-medium text-gray-100 mb-4">Recall across K</h2>
+              <h2 className="text-lg font-medium text-black mb-4">Recall across K</h2>
               <div className="h-64">
                 <MetricBarChart data={chartData} dataKey="recall" color="#10B981" />
               </div>
             </div>
             <div className="card p-6">
-              <h2 className="text-lg font-medium text-gray-100 mb-4">NDCG across K</h2>
+              <h2 className="text-lg font-medium text-black mb-4">NDCG across K</h2>
               <div className="h-64">
                 <MetricBarChart data={chartData} dataKey="ndcg" color="#8B5CF6" />
               </div>
@@ -89,19 +89,19 @@ export default function RetrieverAnalysis() {
           </div>
 
           <div className="card p-6">
-             <h2 className="text-lg font-medium text-gray-100 mb-4">Sample Retrieved Chunks</h2>
+             <h2 className="text-lg font-medium text-black mb-4">Sample Retrieved Chunks</h2>
              <div className="space-y-6">
                {analysis?.sample_chunks?.map((sample, i) => (
-                 <div key={i} className="border border-border rounded-lg p-4 bg-cardHover">
-                    <p className="text-xs text-muted mb-3 font-mono">Query ID: {sample.query_id}</p>
+                 <div key={i} className="border border-border rounded-lg p-4 bg-card-elevated">
+                    <p className="text-xs text-slate-900 mb-3 font-mono">Query ID: {sample.query_id}</p>
                     <div className="space-y-3">
                       {sample.chunks?.map((chunk, j) => (
                         <div key={j} className="bg-card p-3 rounded shadow-sm border border-border">
                           <div className="flex justify-between items-start mb-2">
                             <span className="text-xs font-bold text-accent">Rank {j+1}</span>
-                            <span className="text-xs text-muted">Score: {chunk.score.toFixed(4)}</span>
+                            <span className="text-xs text-slate-900">Score: {chunk.score.toFixed(4)}</span>
                           </div>
-                          <p className="text-sm text-gray-300 line-clamp-3" title={chunk.doc_chunk}>{chunk.doc_chunk}</p>
+                          <p className="text-sm text-slate-900 line-clamp-3" title={chunk.doc_chunk}>{chunk.doc_chunk}</p>
                         </div>
                       ))}
                     </div>
